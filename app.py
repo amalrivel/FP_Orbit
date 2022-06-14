@@ -2,7 +2,6 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 import os, shutil
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
 from werkzeug.utils import secure_filename
  
 app = Flask(__name__)
@@ -120,4 +119,4 @@ def display_image(filename):
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
  
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5000, debug=True)
