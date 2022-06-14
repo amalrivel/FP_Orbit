@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Judul</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+</head>
+
+<body>
+    <header class="p-3 bg-dark text-white">
+        <div class="container d-flex justify-content-center">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <ul class="nav nav-pills col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li class="nav-item"><a href="/" class="nav-link text-white">Beranda</a></li>
+                    <li class="nav-item"><a href="/feature" class="nav-link text-white active">Fitur</a></li>
+                    <li class="nav-item"><a href="/about" class="nav-link text-white">Tentang</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Borobudur Relics Identification</h2>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec magna consequat, varius
+                augue id, dapibus tellus. Vestibulum consectetur suscipit elit, viverra dapibus tortor molestie vitae.
+                Donec at consectetur enim.</p>
+        </div>
+    </div>
+
+
+    <div class="container col-md-6">
+        <img id="frame" src="" class="img-fluid" />
+        <div class="mb-5">
+            <form method="post" action="/feature" enctype="multipart/form-data">
+                <label for="Image" class="form-label">Upload your Borobudur Relics</label>
+                <input class="form-control" type="file" name="file" autocomplete="off" required onchange="preview()">
+                <input type="submit" value="Submit" onclick="clearImage()" class="btn btn-primary mt-3">
+                <!-- <button type="submit" onclick="clearImage()" class="btn btn-primary mt-3" value="Upload">Process</button> -->
+            </form>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% if filename %}
+        <img class="img-fluid" src="{{ url_for('display_image', filename=filename) }}"
+            alt="{{ url_for('display_image', filename=filename) }}">
+        {% endif %}
+        <p>{{result}}</p>
+        <!-- <img id="frame" src="" class="img-fluid" /> -->
+    </div>
+
+    <script>
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+        }
+        function clearImage() {
+            document.getElementById('formFile').value = null;
+            frame.src = "";
+        }
+    </script>
+
+    <!-- <form runat="server">
+        <input accept="image/*" type='file' id="imgInp" />
+        <img id="blah" src="#" alt="your image" />
+    </form>
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
+    </script> -->
+
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Beranda</a></li>
+                <li class="nav-item"><a href="/feature" class="nav-link px-2 text-muted">Fitur</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link px-2 text-muted">Tentang</a></li>
+            </ul>
+            <p class="text-center text-muted">&copy; 2022 Company, Inc</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
