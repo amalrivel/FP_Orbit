@@ -1,6 +1,5 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
 import os, shutil
-from keras.preprocessing import image
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
