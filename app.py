@@ -105,7 +105,6 @@ def upload_image():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         result = machine_learning(file.filename)
-        # result = "Kono dio da"
         #print('upload_image filename: ' + filename)
         flash('Image successfully uploaded and displayed below')
         return render_template('fitur.html', filename=filename, result=result)
