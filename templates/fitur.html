@@ -25,9 +25,7 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2>Borobudur Relics Identification</h2>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec magna consequat, varius
-                augue id, dapibus tellus. Vestibulum consectetur suscipit elit, viverra dapibus tortor molestie vitae.
-                Donec at consectetur enim.</p>
+            <p class="lead"></p>
         </div>
     </div>
 
@@ -53,8 +51,10 @@
         {% if filename %}
         <img class="img-fluid" src="{{ url_for('display_image', filename=filename) }}"
             alt="{{ url_for('display_image', filename=filename) }}">
-        {% endif %}
         <p>{{result}}</p>
+        <a href="/about">Cari tau lebih banyak</a>
+        {% endif %}
+
         <!-- <img id="frame" src="" class="img-fluid" /> -->
     </div>
 

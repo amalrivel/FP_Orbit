@@ -3,6 +3,7 @@ import os, shutil
 import numpy as np
 import tensorflow as tf
 from werkzeug.utils import secure_filename
+import pastebin as pb
  
 app = Flask(__name__)
  
@@ -29,52 +30,19 @@ def delete_file_in_directory():
             print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 def machine_learning(filename):
-    image_class_dict={ 0:'Relief 1',
-  1:'Relief 18',
-  2:'Relief 19',
-  3:'Relief 2',
-  4:'Relief 20',
-  5:'Relief 21',
-  6:'Relief 22',
-  7:'Relief 23',
-  8:'Relief 27',
-  9:'Relief 28',
-  10:'Relief 29',
-  11:'Relief 3',
-  12:'Relief 30',
-  13:'Relief 31',
-  14:'Relief 32',
-  15:'Relief 33',
-  16:'Relief 34',
-  17:'Relief 35',
-  18:'Relief 36',
-  19:'Relief 37',
-  20:'Relief 38',
-  21:'Relief 39',
-  22:'Relief 4',
-  23:'Relief 40',
-  24:'Relief 41',
-  25:'Relief 42',
-  26:'Relief 43',
-  27:'Relief 44',
-  28:'Relief 47',
-  29:'Relief 48',
-  30:'Relief 5',
-  31:'Relief 50',
-  32:'Relief 6',
-  33:'Relief 7',
-  34:'Relief 8'}
-
+    image_class_dict = pb.image_class_dict()
+    image_class_clasification = pb.image_class_clasification()
     model = tf.keras.models.load_model('model/model.h5')
     img = tf.keras.utils.load_img('static/uploads/' + filename, target_size = (224,224))
     pred_prob = model.predict(tf.expand_dims(tf.keras.utils.img_to_array(img) , axis = 0))
     pred = pred_prob.max()
     result = image_class_dict[np.argmax(list(pred_prob))]
+    result_class = image_class_clasification[np.argmax(list(pred_prob))]
     return_to = ""
     if pred < .5:
-        return_to = f"This is not a relief.\n With pred: {pred:.2f} "
+        return_to = f"Mungkin relief {result} kategori {result_class}, dengan prediksi: {pred:.2f} "
     else:
-        return_to = f"The image is classified as: {result},\n pred: {pred:.2f}"
+        return_to = f"Relief {result} kategori {result_class}, dengan prediksi: {pred:.2f}"
     return return_to
      
 @app.route('/')
@@ -91,6 +59,10 @@ def feature():
 def about():
     delete_file_in_directory()
     return render_template('tentang.html')
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('error.html'), 404
  
 @app.route('/feature', methods=['POST'])
 def upload_image():
